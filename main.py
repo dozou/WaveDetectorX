@@ -5,26 +5,26 @@ from PyQt5.QtCore import Qt
 import pathlib
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from decoder import S1TDecoder
 from detector import Detector
 from control_panel import ControlWidget
+from item import Item
 
-
-class Item(QListWidgetItem):
-    def __init__(self, data:S1TDecoder, parent=None):
-        super(Item, self).__init__(data.name,parent)
-        self.data = data
 
 class WaveDetectorX(QWidget):
     def __init__(self, parent=None):
         super(WaveDetectorX, self).__init__(parent)
-        self.open_button = QPushButton("Open")
+        self.setWindowTitle("WaveDetectorX")
+        self.open_button = QPushButton("OPEN")
+        self.save_button = QPushButton("SVAE")
         self.control_panel = ControlWidget()
         self.dirctory_textline = QLineEdit()
         self.list = QListWidget()
         self.adjust_slider = QSlider(Qt.Horizontal)
 
         self.open_button.clicked.connect(self.open_button_click)
+        self.save_button.clicked.connect(self.save)
         self.control_panel.next_button.clicked.connect(self.next)
         self.control_panel.prev_button.clicked.connect(self.prev)
         self.adjust_slider.valueChanged.connect(self.__update)
@@ -33,6 +33,7 @@ class WaveDetectorX(QWidget):
         layout = QVBoxLayout()
         layout.addWidget(self.dirctory_textline)
         layout.addWidget(self.open_button)
+        layout.addWidget(self.save_button)
         layout.addWidget(self.list)
         layout.addWidget(self.control_panel)
         layout.addWidget(self.adjust_slider)
@@ -89,6 +90,11 @@ class WaveDetectorX(QWidget):
             plt.xlim(x.min(), x.max())
             plt.ylim(y.min(), y.max())
             plt.pause(.001)
+
+    def save(self):
+        t = pd.DataFrame()
+        file_name = pathlib.Path(str(self.path) + "\\detect_data.xlsx")
+        t.to_excel(file_name)
 
 
 if __name__ == "__main__":
