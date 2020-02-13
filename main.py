@@ -93,16 +93,18 @@ class WaveDetectorX(QWidget):
 
         if init:
             self.lines, = plt.plot(x, y)
-            self.point, = plt.plot(x[idx], y[idx], marker=".")
+            self.point, = plt.plot(x[idx], y[idx], "ro")
             plt.pause(.1)
         else:
             self.lines.set_data(x, y)
             print("Sample Name: %s" % d.name)
-            print("Detect index:%d" % idx)
-            print("Detect position:%.2f[mm]" % x[idx])
-            print("Detect load:%.2f[N]" % (y[idx] * 1000))
-            print()
             self.point.set_data(x[idx], y[idx])
+            for i in idx:
+                print("Detect index:%d" % i)
+                print("Detect position:%.2f[mm]" % x[i])
+                print("Detect load:%.2f[N]" % (y[i] * 1000))
+                # self.point.set_data(x[i], y[i])
+            print()
 
             plt.xlim(x.min(), x.max())
             plt.ylim(y.min(), y.max()+y.max()/10)

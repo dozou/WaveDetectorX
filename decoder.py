@@ -12,13 +12,14 @@ class S1TDecoder:
         # self.__header = self.__array[0:10]
         self.__wave_data = self.__array.iloc[10:]
         self.__wave_data.columns = self.__array.iloc[8]
-        self.__wave_data  = self.__wave_data.set_index('Number')
+        self.__wave_data = self.__wave_data.set_index('Number')
 
     def y(self):
-        return numpy.array(self.__wave_data["Load"],dtype=float)
+        return numpy.array(self.__wave_data["Load"], dtype=float)
 
     def x(self):
-        return numpy.array(self.__wave_data["Position"],dtype=float)
+        x = numpy.array(self.__wave_data["Position"], dtype=float)
+        return numpy.arange(x.min(), x.max(), (x.max()-x.min())/len(x))
 
     def positions(self):
         return self.x()

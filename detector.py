@@ -14,17 +14,19 @@ class Detector:
 
     def detect(self, th=0.5):
         _max = self.__y.max()
-        max_range = self.__search_index(self.__y, _max)
+        max_idx = self.__search_index(self.__y, _max)
         
         max_temp = 0.0
-        detect_point = 0
-        for i in range(max_range):
+        max_temp_idx = 0
+        detect_point = []
+        for i in range(max_idx):
             if max_temp < self.__y[i]:
                 max_temp = self.__y[i]
+                max_temp_idx = i
             diff = max_temp-self.__y[i]
-            detect_point = i
             if diff > th:
-                detect_point = self.__search_index(self.__y, max_temp)
-                break
-            
+                detect_point.append(max_temp_idx)
+                max_temp = 0.0
+        detect_point.append(max_idx)
+
         return detect_point

@@ -21,6 +21,7 @@ class SlideBar(QWidget):
         super(SlideBar, self).__init__(parent)
         self.value = 0.0
         self.slider = QSlider(Qt.Horizontal)
+        self.slider.setValue(10)
         self.label = QLabel("%.4f" % self.value)
 
         self.slider.valueChanged.connect(self.__update)
@@ -31,6 +32,8 @@ class SlideBar(QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
 
+        self.__update()
+
     def __update(self):
-        self.value = self.slider.value()/1000
-        self.label.setText("%.3f" % self.value)
+        self.value = self.slider.value() * 0.0001
+        self.label.setText("%.4f" % self.value)
