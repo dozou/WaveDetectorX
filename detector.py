@@ -20,6 +20,7 @@ class Detector:
         max_temp_idx = 0
         detect_point = []
         for i in range(max_idx):
+
             if max_temp < self.__y[i]:
                 max_temp = self.__y[i]
                 max_temp_idx = i

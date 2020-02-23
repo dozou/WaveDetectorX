@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel
-from PyQt5.Qt import (QPushButton, QVBoxLayout, QHBoxLayout, QLineEdit)
+from PyQt5.Qt import (QPushButton,  QHBoxLayout, QDoubleValidator)
 from PyQt5.Qt import (QLineEdit, QListWidget, QListWidgetItem, QSlider)
 
 
@@ -20,11 +20,15 @@ class SlideBar(QWidget):
     def __init__(self, parent=None):
         super(SlideBar, self).__init__(parent)
         self.value = 0.0
+        self.scale = 10000
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setValue(10)
-        self.label = QLabel("%.4f" % self.value)
+        self.label = QLineEdit("%.4f" % self.value)
 
-        self.slider.valueChanged.connect(self.__update)
+        self.slider.valueChanged.connect(self.__changed_slider)
+        self.label.textChanged.connect(self.__changed_label)
+
+        self.label.setValidator(QDoubleValidator())
 
         layout = QHBoxLayout()
         layout.addWidget(QLabel("Detect sensitivity: "))
@@ -32,8 +36,12 @@ class SlideBar(QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
 
-        self.__update()
+        self.__changed_slider()
 
-    def __update(self):
-        self.value = self.slider.value() * 0.0001
+    def __changed_label(self):
+        value = float(self.label.text()) * self.scale
+        self.slider.setValue(value)
+
+    def __changed_slider(self):
+        self.value = self.slider.value() * (1/self.scale)
         self.label.setText("%.4f" % self.value)

@@ -48,6 +48,7 @@ class WaveDetectorX(QWidget):
         self.path = pathlib.Path()
         self.data = list()
         self.index = 0
+        self.setMaximumSize(self.size())
 
     def open_button_click(self):
         self.list.clear()
