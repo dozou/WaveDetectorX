@@ -5,6 +5,7 @@ import pandas
 
 class S1TDecoder:
     def __init__(self, path:pathlib.Path):
+        path = path if type(path) is pathlib.Path else pathlib.Path(path)
         self.name = path.name
         with open(path) as fp:
             self.__array = list(csv.reader(fp, delimiter="\t"))
