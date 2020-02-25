@@ -1,7 +1,28 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel
-from PyQt5.Qt import (QPushButton,  QHBoxLayout, QDoubleValidator)
-from PyQt5.Qt import (QLineEdit, QListWidget, QListWidgetItem, QSlider)
+from PyQt5.Qt import (QPushButton,  QHBoxLayout, QVBoxLayout, QDoubleValidator)
+from PyQt5.Qt import (QLineEdit, QListWidget, QComboBox, QSlider)
+from detector import PeakDetector, ChangePointDetector
+
+
+class DetectorParameterWidget(QWidget):
+    def __init__(self, parent=None):
+        super(DetectorParameterWidget, self).__init__(parent)
+        self.adjust_slider = SlideBar()
+        self.detector_box = QComboBox()
+
+        self.detectors = {
+            "PeakDetector": PeakDetector,
+            "ChangePointDetector": ChangePointDetector
+        }
+
+        for i in self.detectors.keys():
+            self.detector_box.addItem(i)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.detector_box)
+        layout.addWidget(self.adjust_slider)
+        self.setLayout(layout)
 
 
 class ControlWidget(QWidget):

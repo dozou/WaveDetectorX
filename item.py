@@ -2,7 +2,7 @@ from PyQt5.Qt import (QPushButton, QVBoxLayout, QHBoxLayout, QLineEdit)
 from PyQt5.Qt import (QLineEdit, QListWidget, QListWidgetItem, QSlider)
 from PyQt5.QtCore import Qt
 from decoder import S1TDecoder
-from detector import Detector
+from detector import PeakDetector
 
 
 class Item(QListWidgetItem):

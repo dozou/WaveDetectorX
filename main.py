@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from decoder import S1TDecoder
-from detector import Detector
-from control_panel import ControlWidget, SlideBar
+from detector import PeakDetector
+from control_panel import ControlWidget, SlideBar, DetectorParameterWidget
 from item import Item
 from line_edit import LineEdit
 
@@ -24,13 +24,13 @@ class WaveDetectorX(QWidget):
         self.control_panel = ControlWidget()
         self.directory_text_line = LineEdit()
         self.list = QListWidget()
-        self.adjust_slider = SlideBar()
+        self.detector_widget = DetectorParameterWidget()
 
         self.open_button.clicked.connect(self.open_button_click)
         self.save_button.clicked.connect(self.save)
         self.control_panel.next_button.clicked.connect(self.next)
         self.control_panel.prev_button.clicked.connect(self.prev)
-        self.adjust_slider.slider.valueChanged.connect(self.__update)
+        self.detector_widget.adjust_slider.slider.valueChanged.connect(self.__update)
         self.list.itemClicked.connect(self.__update)
 
         layout = QVBoxLayout()
@@ -40,7 +40,7 @@ class WaveDetectorX(QWidget):
         layout.addWidget(self.save_button)
         layout.addWidget(self.list)
         layout.addWidget(self.control_panel)
-        layout.addWidget(self.adjust_slider)
+        layout.addWidget(self.detector_widget)
         self.setLayout(layout)
 
         self.setAcceptDrops(True)
@@ -88,7 +88,7 @@ class WaveDetectorX(QWidget):
         d = item.data
         x = d.x()
         y = d.y()
-        dtctr = Detector(x, y)
+        dtctr = PeakDetector(x, y)
         idx = dtctr.detect(self.adjust_slider.value)
         item.set_detect_index(idx)
 
