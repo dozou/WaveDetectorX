@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from decoder import S1TDecoder
-from detector import PeakDetector
+from change_point_detector import ChangePointDetector
 from control_panel import ControlWidget, SlideBar, DetectorParameterWidget
 from item import Item
 from line_edit import LineEdit
@@ -88,8 +88,8 @@ class WaveDetectorX(QWidget):
         d = item.data
         x = d.x()
         y = d.y()
-        dtctr = PeakDetector(x, y)
-        idx = dtctr.detect(self.adjust_slider.value)
+        dtctr = ChangePointDetector(x, y)
+        idx = dtctr.detect()
         item.set_detect_index(idx)
 
         if init:

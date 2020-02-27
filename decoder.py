@@ -3,6 +3,7 @@ import csv
 import numpy
 import pandas
 
+
 class S1TDecoder:
     def __init__(self, path:pathlib.Path):
         path = path if type(path) is pathlib.Path else pathlib.Path(path)

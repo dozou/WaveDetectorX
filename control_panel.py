@@ -2,7 +2,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel
 from PyQt5.Qt import (QPushButton,  QHBoxLayout, QVBoxLayout, QDoubleValidator)
 from PyQt5.Qt import (QLineEdit, QListWidget, QComboBox, QSlider)
-from detector import PeakDetector, ChangePointDetector
+from change_point_detector import ChangePointDetector
+from peak_detector import PeakDetector
 
 
 class DetectorParameterWidget(QWidget):

@@ -7,7 +7,7 @@ class Difference:
         self.y = y
         # 等間隔とは限らないのでΔxを計算しておく
         self.delta = [self.x[i + 1] - self.x[i] for i in range(len(self.x) - 1)]
-        print(self.x)
+        # print(self.x)
         pass
 
     def central_differential(self, delta: float) -> (np.ndarray, np.ndarray):
@@ -26,7 +26,7 @@ class Difference:
             a = (self.y[i + delta_idx] - self.y[i - delta_idx]) / (2 * dx)
             fx.append(self.x[i])
             fy.append(a)
-            print(dx)
+            # print(dx)
         return np.array(fx), np.array(fy)
 
     def forward_differential(self, delta: float) -> (np.ndarray, np.ndarray):
@@ -44,5 +44,5 @@ class Difference:
             a = (self.y[i + delta_idx] - self.y[i]) / dx
             fx.append(self.x[i])
             fy.append(a)
-            print(dx)
+            # print(dx)
         return np.array(fx), np.array(fy)
